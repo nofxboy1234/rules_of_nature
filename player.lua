@@ -1,6 +1,4 @@
-local class = require "lib.middleclass.middleclass"
-
-Player = class('Player')
+local Player = class('Player')
 
 function Player:initialize(name)
   self.name = name

@@ -1,5 +1,6 @@
-local bump = require 'lib.bump.bump'
-local bump_debug = require 'bump_debug'
+class = require "lib.middleclass.middleclass"
+bump = require 'lib.bump.bump'
+bump_debug = require 'bump_debug'
 
 local Player = require 'player'
 
