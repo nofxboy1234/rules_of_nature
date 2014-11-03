@@ -1,8 +1,10 @@
 class = require "lib.middleclass.middleclass"
 bump = require 'lib.bump.bump'
 bump_debug = require 'bump_debug'
+gamestate = require 'lib.hump.gamestate'
 
 local Player = require 'player'
+local Menu = require 'menu'
 
 local instructions = [[
   bump.lua simple demo
@@ -24,6 +26,7 @@ end
 world = bump.newWorld()
 gravity = 40
 local player = Player:new('Whiskey')
+local menu = Menu:new()
 
 -- Block functions
 
@@ -60,6 +63,9 @@ end
 
 
 function love.load()
+  gamestate.registerEvents()
+  gamestate.switch(menu)
+
   got_joystick = get_joystick()
   print("Controller available: " .. tostring(got_joystick))
 
@@ -77,6 +83,10 @@ function love.load()
               math.random(10, 100)
     )
   end
+
+  window_width = love.graphics.getWidth()
+  window_height = love.graphics.getHeight()
+
 end
 
 function love.update(dt)

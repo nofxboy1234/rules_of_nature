@@ -2,18 +2,22 @@ local Menu = class('Menu')
 
 function Menu:initialize()
   self.menu_items = {"start game", "credits", "help", "quit"}
-  self.title_img = love.graphics.newImage("Resources/Images/SA-01_720.png")
+  self.title_img = love.graphics.newImage("img/title.png")
 
-  self.music = love.audio.newSource("Resources/Sounds/Circlerun_ZEQ2_Select_Your_Game_Mode.mp3", "stream")
+  self.music = love.audio.newSource("sounds/06_It's_kill_or_be_killed_mix.mp3", "stream")
   self.music:setLooping(true)
   self.music:setVolume(0.2)
   self.music:play()
 
-  self.menu_sound = love.audio.newSource("Resources/Sounds/Menu_Selection_Click.wav", "static")
+  self.menu_sound = love.audio.newSource("sounds/Menu_Selection_Click.wav", "static")
   -- menu_sound:setVolume(1.0)
 
   self.menuselection = 1
 end
+
+-- function Menu:enter()
+--   -- self.initialize()
+-- end
 
 function Menu:update(dt)
   -- body
@@ -32,7 +36,7 @@ function Menu:draw()
       love.graphics.setColor(0, 0, 0)
     end
 
-    love.graphics.print(menu_items[i], width/2, height/2 + center_v_offset  + offset)
+    love.graphics.print(self.menu_items[i], window_width/2, window_height/2 + center_v_offset  + offset)
     offset = offset + 20
   end
   love.graphics.setColor(255, 255, 255)
@@ -55,14 +59,14 @@ function Menu:keypressed(key, isrepeat)
     self.menu_sound:stop()
     self.menu_sound:play()
   elseif (key == "up") and self.menuselection == 1 then
-    self.menuselection = #menu_items
+    self.menuselection = #self.menu_items
     self.menu_sound:stop()
     self.menu_sound:play()
-  elseif (key == "down") and self.menuselection < #menu_items then
+  elseif (key == "down") and self.menuselection < #self.menu_items then
     self.menuselection = self.menuselection + 1
     self.menu_sound:stop()
     self.menu_sound:play()
-  elseif (key == "down") and self.menuselection == #menu_items then
+  elseif (key == "down") and self.menuselection == #self.menu_items then
     self.menuselection = 1
     self.menu_sound:stop()
     self.menu_sound:play()
