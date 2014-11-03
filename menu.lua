@@ -1,6 +1,8 @@
 local Menu = class('Menu')
 
 function Menu:initialize()
+  print("Menu:initialize()")
+
   self.menu_items = {"start game", "credits", "help", "quit"}
   self.title_img = love.graphics.newImage("img/title.png")
 
@@ -18,10 +20,6 @@ end
 -- function Menu:enter()
 --   -- self.initialize()
 -- end
-
-function Menu:update(dt)
-  -- body
-end
 
 function Menu:draw()
   love.graphics.draw(self.title_img, 0, 0)
@@ -48,12 +46,6 @@ function Menu:keypressed(key, isrepeat)
       love.event.quit()
   end
 
-  -- if (key == "up") and self.menuselection > 1 then
-  --   self.menuselection = self.menuselection - 1
-  -- elseif (key == "down") and self.menuselection < #menu_items then
-  --     self.menuselection = self.menuselection + 1
-  -- end
-
   if (key == "up") and self.menuselection > 1 then
     self.menuselection = self.menuselection - 1
     self.menu_sound:stop()
@@ -74,8 +66,35 @@ function Menu:keypressed(key, isrepeat)
 
   if key == "return" and self.menuselection == 1 then
     self.music:stop()
-    changegamestate("game")
+    gamestate.switch(require("game")(true))
   elseif key == "return" and self.menuselection == 4 then
+    love.event.quit()
+  end
+end
+
+function Menu:joystickpressed(joystick, button)
+  if (button == 14) and self.menuselection > 1 then
+    self.menuselection = self.menuselection - 1
+    self.menu_sound:stop()
+    self.menu_sound:play()
+  elseif (button == 14) and self.menuselection == 1 then
+    self.menuselection = #self.menu_items
+    self.menu_sound:stop()
+    self.menu_sound:play()
+  elseif (button == 15) and self.menuselection < #self.menu_items then
+    self.menuselection = self.menuselection + 1
+    self.menu_sound:stop()
+    self.menu_sound:play()
+  elseif (button == 15) and self.menuselection == #self.menu_items then
+    self.menuselection = 1
+    self.menu_sound:stop()
+    self.menu_sound:play()
+  end
+
+  if button == 1 and self.menuselection == 1 then
+    self.music:stop()
+    gamestate.switch(require("game")(true))
+  elseif button == 1 and self.menuselection == 4 then
     love.event.quit()
   end
 end

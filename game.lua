@@ -1,83 +1,84 @@
 local Game = class('Game')
 
 function Game:initialize()
-  self.menu_items = {"start game", "credits", "help", "quit"}
-  self.title_img = love.graphics.newImage("img/title.png")
+  print("Game:initialize()")
+  self.blocks = {}
+  self.instructions = [[
+    bump.lua simple demo
 
-  self.music = love.audio.newSource("sounds/06_It's_kill_or_be_killed_mix.mp3", "stream")
-  self.music:setLooping(true)
-  self.music:setVolume(0.2)
-  self.music:play()
+      arrows: move
+      tab: toggle debug info
+      delete: run garbage collector
+  ]]
 
-  self.menu_sound = love.audio.newSource("sounds/Menu_Selection_Click.wav", "static")
-  -- menu_sound:setVolume(1.0)
 
-  self.menuselection = 1
+  world:add(player, player.l, player.t, player.w, player.h)
+
+  self:addBlock(0,       0,     800, 32)
+  self:addBlock(0,      32,      32, 600-32*2)
+  self:addBlock(800-32, 32,      32, 600-32*2)
+  self:addBlock(0,      600-32, 800, 32)
+
+  for i=1,30 do
+    self:addBlock( math.random(100, 600),
+              math.random(100, 400),
+              math.random(10, 100),
+              math.random(10, 100)
+    )
+  end
+
 end
 
--- function Game:enter()
---   -- self.initialize()
--- end
-
 function Game:update(dt)
-  -- body
+  player:update(dt)
 end
 
 function Game:draw()
-  love.graphics.draw(self.title_img, 0, 0)
-  -- Draw Game
-  local center_v_offset = 150
-  local offset = 0
-  for i = 1, #self.menu_items do
-    -- Set Game text colour depending on of it is selected
-    if self.menuselection == i then
-      love.graphics.setColor(255, 255, 255)
-    else
-      love.graphics.setColor(0, 0, 0)
-    end
-
-    love.graphics.print(self.menu_items[i], window_width/2, window_height/2 + center_v_offset  + offset)
-    offset = offset + 20
-  end
-  love.graphics.setColor(255, 255, 255)
-
+  self:drawBlocks()
+  player:draw()
+  if shouldDrawDebug then drawDebug() end
+  self:drawMessage()
 end
 
-function Game:keypressed(key, isrepeat)
-  if key == "escape" then
-      love.event.quit()
-  end
+function Game:keypressed(k, isrepeat)
+  if k=="escape" then love.event.quit() end
+  if k=="tab"    then shouldDrawDebug = not shouldDrawDebug end
+  if k=="delete" then collectgarbage("collect") end
+end
 
-  -- if (key == "up") and self.menuselection > 1 then
-  --   self.menuselection = self.menuselection - 1
-  -- elseif (key == "down") and self.menuselection < #menu_items then
-  --     self.menuselection = self.menuselection + 1
-  -- end
+function Game:keyreleased(key)
+  player:keyreleased(key)
+end
 
-  if (key == "up") and self.menuselection > 1 then
-    self.menuselection = self.menuselection - 1
-    self.menu_sound:stop()
-    self.menu_sound:play()
-  elseif (key == "up") and self.menuselection == 1 then
-    self.menuselection = #self.menu_items
-    self.menu_sound:stop()
-    self.menu_sound:play()
-  elseif (key == "down") and self.menuselection < #self.menu_items then
-    self.menuselection = self.menuselection + 1
-    self.menu_sound:stop()
-    self.menu_sound:play()
-  elseif (key == "down") and self.menuselection == #self.menu_items then
-    self.menuselection = 1
-    self.menu_sound:stop()
-    self.menu_sound:play()
-  end
+function Game:joystickreleased(joystick, button)
+  player:joystickreleased(joystick, button)
+end
 
-  if key == "return" and self.menuselection == 1 then
-    self.music:stop()
-    changegamestate("game")
-  elseif key == "return" and self.menuselection == 4 then
-    love.event.quit()
+function Game:addBlock(l,t,w,h)
+  local block = {l=l,t=t,w=w,h=h}
+  self.blocks[#self.blocks+1] = block
+  world:add(block, l,t,w,h)
+end
+
+function Game:drawBlocks()
+  for _,block in ipairs(self.blocks) do
+    drawBox(block, 255,0,0)
   end
+end
+
+-- Message/debug functions
+function Game:drawMessage()
+  local msg = self.instructions:format(tostring(shouldDrawDebug))
+  love.graphics.setColor(255, 255, 255)
+  love.graphics.print(msg, 550, 10)
+end
+
+function Game:drawDebug()
+  bump_debug.draw(world)
+
+  local statistics = ("fps: %d, mem: %dKB"):format(love.timer.getFPS(), collectgarbage("count"))
+  love.graphics.setColor(255, 255, 255)
+  love.graphics.print(statistics, 630, 580 )
 end
 
 return Game
