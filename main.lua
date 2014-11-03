@@ -12,7 +12,7 @@ local instructions = [[
 ]]
 
 -- helper function
-local function drawBox(box, r,g,b)
+function drawBox(box, r,g,b)
   love.graphics.setColor(r,g,b,70)
   love.graphics.rectangle("fill", box.l, box.t, box.w, box.h)
   love.graphics.setColor(r,g,b)
@@ -20,83 +20,9 @@ local function drawBox(box, r,g,b)
 end
 
 -- World creation
-local world = bump.newWorld()
-local gravity = 40
-
+world = bump.newWorld()
+gravity = 40
 local player = Player:new('Whiskey')
-
-local function updatePlayer(dt)
-  -- local player.xVelocity, player.yVelocity = 0, 0
-  if love.keyboard.isDown('right') then
-    player.xVelocity = player.runSpeed * dt
-  elseif love.keyboard.isDown('left') then
-    player.xVelocity = -player.runSpeed * dt
-  end
-
-  if got_joystick then
-    if joystick_01:isDown(13) then
-      player.xVelocity = player.runSpeed * dt
-    elseif joystick_01:isDown(12) then
-      player.xVelocity = -player.runSpeed * dt
-    end
-  end
-
-  if (player.playerState == "stand") and love.keyboard.isDown('x') then
-    player.yVelocity = player.playerJumpVelocity * dt
-    player.playerState = "jump"
-  end
-
-  if got_joystick then
-    if (player.playerState == "stand") and joystick_01:isDown(1) then
-      player.yVelocity = player.playerJumpVelocity * dt
-      player.playerState = "jump"
-    end
-  end
-
-  -- apply gravity
-  player.yVelocity = player.yVelocity + (gravity * dt)
-
-  -- update the player's position and check for collisions
-  if player.xVelocity ~= 0 or player.yVelocity ~= 0 then
-    local future_l, future_t = player.l + player.xVelocity, player.t + player.yVelocity
-
-    local cols, len = world:check(player, future_l, future_t)
-    if len == 0 then
-      player.l, player.t = future_l, future_t
-      world:move(player, future_l, future_t)
-    else
-      -- local col, tl, tt, sl, st
-      local col, tl, tt, nx, ny, sl, st
-      while len > 0 do
-        col = cols[1]
-        -- tl,tt,_,_,sl,st = col:getSlide()
-        tl, tt, nx, ny, sl, st = col:getSlide()
-
-        print("nx: " .. nx .. " ny: " .. ny)
-
-        player.l, player.t = tl, tt
-        world:move(player, tl, tt)
-
-        cols, len = world:check(player, sl, st)
-        if len == 0 then
-          player.l, player.t = sl, st
-          world:move(player, sl, st)
-
-          player.yVelocity = 0
-          if ny == -1 then
-            player.playerState = "stand"
-          end
-
-        end
-      end
-    end
-  end
-end
-
-
-local function drawPlayer()
-  drawBox(player, 0, 255, 0)
-end
 
 -- Block functions
 
@@ -153,12 +79,12 @@ function love.load()
 end
 
 function love.update(dt)
-  updatePlayer(dt)
+  player:update(dt)
 end
 
 function love.draw()
   drawBlocks()
-  drawPlayer()
+  player:draw()
   if shouldDrawDebug then drawDebug() end
   drawMessage()
 end
@@ -171,9 +97,7 @@ function love.keypressed(k)
 end
 
 function love.keyreleased(key)
-  if (key == "right") or (key == "left") then
-    player.xVelocity = 0
-  end
+  player:keyreleased(key)
 end
 
 function get_joystick()
@@ -188,16 +112,5 @@ function get_joystick()
 end
 
 function love.joystickreleased(joystick, button)
-  if joystick == joystick_01 then
-    if (button == 13) or (button == 12) then
-      player.xVelocity = 0
-    end
-
-    -- if (button == 8) then
-    --   print("Start pressed")
-    --   world:remove(player)
-    --   world:add(player, player.l, player.t, player.w, player.h)
-    -- end
-  end
-
+  player:joystickreleased(joystick, button)
 end
