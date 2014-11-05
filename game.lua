@@ -2,6 +2,7 @@ local Game = class('Game')
 
 function Game:initialize()
   print("Game:initialize()")
+
   self.blocks = {}
   self.instructions = [[
     bump.lua simple demo
@@ -30,6 +31,13 @@ function Game:initialize()
     )
   end
 
+  if playMusic then
+    self.music = love.audio.newSource("sounds/04_Kill_U_2wise_Over.mp3", "stream")
+    self.music:setLooping(true)
+    self.music:setVolume(0.2)
+    self.music:play()
+  end
+
 end
 
 function Game:update(dt)
@@ -45,7 +53,13 @@ end
 
 function Game:keypressed(k, isrepeat)
   -- if k=="escape" then love.event.quit() end
-  if k=="escape" then gamestate.switch(require("menu")()) end
+  if k=="escape" then
+    if playMusic then
+      self.music:stop()
+    end
+    gamestate.switch(require("menu")())
+  end
+
   if k=="tab"    then shouldDrawDebug = not shouldDrawDebug end
   if k=="delete" then collectgarbage("collect") end
 end
@@ -57,7 +71,10 @@ end
 function Game:joystickreleased(joystick, button)
   player:joystickreleased(joystick, button)
   if (joystick == joystick_01) and (button == 8) then
-      gamestate.switch(require("menu")())
+    if playMusic then
+      self.music:stop()
+    end
+    gamestate.switch(require("menu")())
   end
 end
 

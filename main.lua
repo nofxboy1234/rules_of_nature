@@ -5,6 +5,8 @@ gamestate = require 'lib.hump.gamestate'
 
 local Player = require 'player'
 
+playMusic = false
+
 gravity = 40
 
 window_width = love.graphics.getWidth()
@@ -42,3 +44,8 @@ function get_joystick()
   end
 end
 
+function love:joystickreleased(joystick, button)
+  if (joystick == joystick_01) and (button == 7) then
+    playMusic = not playMusic
+  end
+end
