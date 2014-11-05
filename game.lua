@@ -55,6 +55,9 @@ end
 
 function Game:joystickreleased(joystick, button)
   player:joystickreleased(joystick, button)
+  if (joystick == joystick_01) and (button == 8) then
+      gamestate.switch(require("menu")())
+  end
 end
 
 function Game:addBlock(l,t,w,h)
