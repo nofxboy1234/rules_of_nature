@@ -5,8 +5,6 @@ gamestate = require 'lib.hump.gamestate'
 
 local Player = require 'player'
 
--- World creation
-world = bump.newWorld()
 gravity = 40
 
 window_width = love.graphics.getWidth()

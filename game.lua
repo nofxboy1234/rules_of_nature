@@ -11,6 +11,8 @@ function Game:initialize()
       delete: run garbage collector
   ]]
 
+  -- World creation
+  world = bump.newWorld()
 
   world:add(player, player.l, player.t, player.w, player.h)
 
