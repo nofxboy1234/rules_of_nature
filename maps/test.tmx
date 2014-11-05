@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="25" height="19" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
+  <image source="../../../../../tilesets/sci-fi-platformer-tiles-32x32-extension_0.png" width="512" height="3520"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="25" height="19">
+  <data encoding="base64" compression="zlib">
+   eJwzZWVgMB3Fo3gUj+JRPIpHMc0wAEkla58=
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="25" height="19">
+  <data encoding="base64" compression="zlib">
+   eJxjYECAQlYGFDCRiYGhkQTcxsRAEKDbQSpoJsIOSgE97JiKIwxB4YOMiQXk6BkoMFBupdQ+argZPX4HQ3wNBjdQGwy2MB5qgNrhR8t4oIZbseVLamMAUHAmlQ==
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="25" height="19">
+  <data encoding="base64" compression="zlib">
+   eJxjYBjeIJuRgSGHkXrmXWfBFKsGml9DRTtGAekAW7yQCviRzACZx08FM4cjyASm9Swap/dKoPlVgyBPeTIzMHgx09aOSKD5UTS2YxQMPAAAUfsHpg==
+  </data>
+ </layer>
+</map>
