@@ -17,10 +17,6 @@ function Menu:initialize()
   self.menuselection = 1
 end
 
--- function Menu:enter()
---   -- self.initialize()
--- end
-
 function Menu:draw()
   love.graphics.draw(self.title_img, 0, 0)
   -- Draw menu
@@ -93,7 +89,7 @@ function Menu:joystickpressed(joystick, button)
 
   if button == 1 and self.menuselection == 1 then
     self.music:stop()
-    gamestate.switch(require("game")(true))
+    gamestate.switch(require("game")())
   elseif button == 1 and self.menuselection == 4 then
     love.event.quit()
   end

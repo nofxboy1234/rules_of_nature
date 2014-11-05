@@ -36,12 +36,13 @@ end
 function Game:draw()
   self:drawBlocks()
   player:draw()
-  if shouldDrawDebug then drawDebug() end
+  if shouldDrawDebug then self:drawDebug() end
   self:drawMessage()
 end
 
 function Game:keypressed(k, isrepeat)
-  if k=="escape" then love.event.quit() end
+  -- if k=="escape" then love.event.quit() end
+  if k=="escape" then gamestate.switch(require("menu")()) end
   if k=="tab"    then shouldDrawDebug = not shouldDrawDebug end
   if k=="delete" then collectgarbage("collect") end
 end

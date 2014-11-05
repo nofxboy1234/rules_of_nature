@@ -4,7 +4,6 @@ bump_debug = require 'bump_debug'
 gamestate = require 'lib.hump.gamestate'
 
 local Player = require 'player'
--- local Menu = require 'menu'
 
 -- World creation
 world = bump.newWorld()
@@ -14,7 +13,6 @@ window_width = love.graphics.getWidth()
 window_height = love.graphics.getHeight()
 
 player = Player:new('Whiskey')
--- menu = Menu:new()
 
 -- helper function
 function drawBox(box, r,g,b)
@@ -31,7 +29,7 @@ function love.load()
   print("Controller available: " .. tostring(got_joystick))
 
   gamestate.registerEvents()
-  gamestate.switch(require("menu")(true))
+  gamestate.switch(require("menu")())
 end
 
 
