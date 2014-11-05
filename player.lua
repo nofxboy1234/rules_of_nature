@@ -8,6 +8,9 @@ function Player:initialize(name)
   self.w = 20
   self.h = 20
 
+  self.start_l = self.l
+  self.start_t = self.t
+
   self.xVelocity = 0
   self.yVelocity = 0
 
@@ -99,6 +102,10 @@ function Player:joystickreleased(joystick, button)
       self.xVelocity = 0
     end
   end
+end
+
+function Player:reset_pos()
+  self.l, self.t = self.start_l, self.start_t
 end
 
 return Player

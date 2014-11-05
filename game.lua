@@ -14,6 +14,7 @@ function Game:initialize()
   -- World creation
   world = bump.newWorld()
 
+  player:reset_pos()
   world:add(player, player.l, player.t, player.w, player.h)
 
   self:addBlock(0,       0,     800, 32)
