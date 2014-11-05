@@ -88,7 +88,7 @@ function Menu:joystickpressed(joystick, button)
   end
 
   if button == 1 and self.menuselection == 1 then
-    self.music:stop()
+    -- self.music:stop()
     gamestate.switch(require("game")())
   elseif button == 1 and self.menuselection == 4 then
     love.event.quit()

@@ -3,7 +3,7 @@ local Player = class('Player')
 function Player:initialize(name)
   self.name = name
 
-  self.l = 400
+  self.l = 50
   self.t = 50
   self.w = 20
   self.h = 20
