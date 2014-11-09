@@ -1,7 +1,11 @@
 local Game = class('Game')
 
+local sti = require "lib.sti"
+
 function Game:initialize()
   print("Game:initialize()")
+
+  self.map = sti.new("maps/test")
 
   self.blocks = {}
   self.instructions = [[
@@ -41,10 +45,14 @@ function Game:initialize()
 end
 
 function Game:update(dt)
+  self.map:update(dt)
+
   player:update(dt)
 end
 
 function Game:draw()
+  self.map:draw()
+
   self:drawBlocks()
   player:draw()
   if shouldDrawDebug then self:drawDebug() end

@@ -5,7 +5,7 @@ gamestate = require 'lib.hump.gamestate'
 
 local Player = require 'player'
 
-playMusic = false
+playMusic = true
 
 gravity = 40
 

@@ -5,8 +5,8 @@ function Player:initialize(name)
 
   self.l = 50
   self.t = 50
-  self.w = 20
-  self.h = 20
+  self.w = 32
+  self.h = 32
 
   self.start_l = self.l
   self.start_t = self.t
