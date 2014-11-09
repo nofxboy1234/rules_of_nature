@@ -66,7 +66,7 @@ function Menu:keypressed(key, isrepeat)
     if playMusic then
       self.music:stop()
     end
-    gamestate.switch(require("game")(true))
+    gamestate.switch(require("game")())
   elseif key == "return" and self.menuselection == 4 then
     love.event.quit()
   end

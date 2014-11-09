@@ -63,6 +63,7 @@ function Game:draw()
 end
 
 function Game:keypressed(k, isrepeat)
+  print("Game:keypressed()")
   if k == "escape" then
     if playMusic then
       self.music:stop()
@@ -75,17 +76,23 @@ function Game:keypressed(k, isrepeat)
 end
 
 function Game:keyreleased(key)
+  print("Game:keyreleased()")
   player:keyreleased(key)
 end
 
-function Game:joystickreleased(joystick, button)
-  player:joystickreleased(joystick, button)
+function Game:joystickpressed(joystick, button)
+  print("Game:joystickpressed()")
   if (joystick == joystick_01) and (button == 8) then
     if playMusic then
       self.music:stop()
     end
     gamestate.switch(require("menu")())
   end
+end
+
+function Game:joystickreleased(joystick, button)
+  print("Game:joystickreleased()")
+  player:joystickreleased(joystick, button)
 end
 
 function Game:addBlock(l,t,w,h)

@@ -66,7 +66,7 @@ function Player:update(dt)
         -- tl,tt,_,_,sl,st = col:getSlide()
         tl, tt, nx, ny, sl, st = col:getSlide()
 
-        print("nx: " .. nx .. " ny: " .. ny)
+        -- print("nx: " .. nx .. " ny: " .. ny)
 
         self.l, self.t = tl, tt
         world:move(self, tl, tt)

@@ -50,8 +50,8 @@ function get_joystick()
   end
 end
 
-function love:joystickreleased(joystick, button)
-  if (joystick == joystick_01) and (button == 7) then
-    playMusic = not playMusic
-  end
-end
+-- function love:joystickreleased(joystick, button)
+  -- if (joystick == joystick_01) and (button == 7) then
+  --   playMusic = not playMusic
+  -- end
+-- end
