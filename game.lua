@@ -8,7 +8,7 @@ function Game:initialize()
   self.map = sti.new("maps/test")
   -- Get the platforms object layer
   local platformsLayer = self.map.layers["platforms"]
-  -- Turn off visibility  property of platform layer so default draw() doesn't draw them
+  -- Turn off visibility property of platforms layer so default draw() doesn't draw them
   platformsLayer.visible = false
   -- Get the collision rectangles from the platforms layer
   self.rectangles = platformsLayer.objects
@@ -55,9 +55,9 @@ end
 
 function Game:draw()
   self.map:draw()
-
   self:drawBlocks()
   player:draw()
+
   if shouldDrawDebug then self:drawDebug() end
   self:drawMessage()
 end
