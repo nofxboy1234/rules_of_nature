@@ -3,7 +3,7 @@ bump = require 'lib.bump.bump'
 bump_debug = require 'bump_debug'
 gamestate = require 'lib.hump.gamestate'
 
-playMusic = true
+playMusic = false
 
 gravity = 40
 
