@@ -6,6 +6,16 @@ function Game:initialize()
   print("Game:initialize()")
 
   self.map = sti.new("maps/test")
+  -- Get the platforms object layer
+  local platformsLayer = self.map.layers["platforms"]
+  -- Turn off visibility  property of platform layer so default draw() doesn't draw them
+  platformsLayer.visible = false
+  -- Get the collision rectangles from the platforms layer
+  self.rectangles = platformsLayer.objects
+
+  -- for _,rect in ipairs(self.rectangles) do
+  --   print(rect.x)
+  -- end
 
   self.blocks = {}
   self.instructions = [[
@@ -22,17 +32,10 @@ function Game:initialize()
   player:reset_pos()
   world:add(player, player.l, player.t, player.w, player.h)
 
-  self:addBlock(0,       0,     window_width, 32)
-  self:addBlock(0,      32,      32, window_height-32*2)
-  self:addBlock(window_width-32, 32,      32, window_height-32*2)
-  self:addBlock(0,      window_height-32, window_width, 32)
-
-  for i=1,30 do
-    self:addBlock( math.random(100, window_height),
-              math.random(100, 400),
-              math.random(10, 100),
-              math.random(10, 100)
-    )
+  -- Add the collision rectangle from the platforms layer to the
+  -- list of blocks to be drawn, and the bump world, for collision
+  for _,rect in ipairs(self.rectangles) do
+    self:addBlock(rect.x, rect.y, rect.width, rect.height)
   end
 
   if playMusic then
@@ -60,8 +63,7 @@ function Game:draw()
 end
 
 function Game:keypressed(k, isrepeat)
-  -- if k=="escape" then love.event.quit() end
-  if k=="escape" then
+  if k == "escape" then
     if playMusic then
       self.music:stop()
     end
@@ -94,7 +96,7 @@ end
 
 function Game:drawBlocks()
   for _,block in ipairs(self.blocks) do
-    drawBox(block, 255,0,0)
+    drawBox(block, 255,0,0,_,false)
   end
 end
 

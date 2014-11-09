@@ -15,11 +15,15 @@ window_height = love.graphics.getHeight()
 player = Player:new('Whiskey')
 
 -- helper function
-function drawBox(box, r, g, b, alpha)
+function drawBox(box, r, g, b, alpha, overlay)
   alpha = alpha or 70
+  overlay = overlay or true
 
-  love.graphics.setColor(r,g,b,alpha)
-  love.graphics.rectangle("fill", box.l, box.t, box.w, box.h)
+  if overlay then
+    love.graphics.setColor(r,g,b,alpha)
+    love.graphics.rectangle("fill", box.l, box.t, box.w, box.h)
+  end
+
   love.graphics.setColor(r,g,b)
   love.graphics.rectangle("line", box.l, box.t, box.w, box.h)
 end
