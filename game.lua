@@ -22,13 +22,13 @@ function Game:initialize()
   player:reset_pos()
   world:add(player, player.l, player.t, player.w, player.h)
 
-  self:addBlock(0,       0,     800, 32)
-  self:addBlock(0,      32,      32, 600-32*2)
-  self:addBlock(800-32, 32,      32, 600-32*2)
-  self:addBlock(0,      600-32, 800, 32)
+  self:addBlock(0,       0,     window_width, 32)
+  self:addBlock(0,      32,      32, window_height-32*2)
+  self:addBlock(window_width-32, 32,      32, window_height-32*2)
+  self:addBlock(0,      window_height-32, window_width, 32)
 
   for i=1,30 do
-    self:addBlock( math.random(100, 600),
+    self:addBlock( math.random(100, window_height),
               math.random(100, 400),
               math.random(10, 100),
               math.random(10, 100)
