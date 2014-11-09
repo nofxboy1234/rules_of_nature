@@ -87,7 +87,7 @@ function Player:update(dt)
 end
 
 function Player:draw()
-  drawBox(self, 0, 255, 0)
+  drawBox(self, 0, 255, 0, 255)
 end
 
 function Player:keyreleased(key)

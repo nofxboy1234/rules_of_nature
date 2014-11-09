@@ -15,8 +15,10 @@ window_height = love.graphics.getHeight()
 player = Player:new('Whiskey')
 
 -- helper function
-function drawBox(box, r,g,b)
-  love.graphics.setColor(r,g,b,70)
+function drawBox(box, r, g, b, alpha)
+  alpha = alpha or 70
+
+  love.graphics.setColor(r,g,b,alpha)
   love.graphics.rectangle("fill", box.l, box.t, box.w, box.h)
   love.graphics.setColor(r,g,b)
   love.graphics.rectangle("line", box.l, box.t, box.w, box.h)
