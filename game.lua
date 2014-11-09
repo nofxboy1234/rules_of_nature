@@ -1,4 +1,5 @@
 local Game = class('Game')
+local Player = require 'player'
 
 local sti = require "lib.sti"
 
@@ -29,8 +30,8 @@ function Game:initialize()
   -- World creation
   world = bump.newWorld()
 
-  player:reset_pos()
-  world:add(player, player.l, player.t, player.w, player.h)
+  self.player = Player:new('Whiskey')
+  world:add(self.player, self.player.l, self.player.t, self.player.w, self.player.h)
 
   -- Add the collision rectangle from the platforms layer to the
   -- list of blocks to be drawn, and the bump world, for collision
@@ -50,20 +51,20 @@ end
 function Game:update(dt)
   self.map:update(dt)
 
-  player:update(dt)
+  self.player:update(dt)
 end
 
 function Game:draw()
   self.map:draw()
   self:drawBlocks()
-  player:draw()
+  self.player:draw()
 
   if shouldDrawDebug then self:drawDebug() end
   self:drawMessage()
 end
 
 function Game:keypressed(k, isrepeat)
-  print("Game:keypressed()")
+  -- print("Game:keypressed()")
   if k == "escape" then
     if playMusic then
       self.music:stop()
@@ -76,12 +77,12 @@ function Game:keypressed(k, isrepeat)
 end
 
 function Game:keyreleased(key)
-  print("Game:keyreleased()")
-  player:keyreleased(key)
+  -- print("Game:keyreleased()")
+  self.player:keyreleased(key)
 end
 
 function Game:joystickpressed(joystick, button)
-  print("Game:joystickpressed()")
+  -- print("Game:joystickpressed()")
   if (joystick == joystick_01) and (button == 8) then
     if playMusic then
       self.music:stop()
@@ -91,8 +92,8 @@ function Game:joystickpressed(joystick, button)
 end
 
 function Game:joystickreleased(joystick, button)
-  print("Game:joystickreleased()")
-  player:joystickreleased(joystick, button)
+  -- print("Game:joystickreleased()")
+  self.player:joystickreleased(joystick, button)
 end
 
 function Game:addBlock(l,t,w,h)

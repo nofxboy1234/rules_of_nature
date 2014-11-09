@@ -41,7 +41,8 @@ function Player:update(dt)
   end
 
   if got_joystick then
-    if (self.state == "stand") and joystick_01:isDown(1) then
+    -- TODO: check whether to use isDown/pressed/released to fine tune
+    if (self.state == "stand") and joystick_01:isDown(2) then
       self.yVelocity = self.jump_vel * dt
       self.state = "jump"
     end
@@ -66,7 +67,7 @@ function Player:update(dt)
         -- tl,tt,_,_,sl,st = col:getSlide()
         tl, tt, nx, ny, sl, st = col:getSlide()
 
-        -- print("nx: " .. nx .. " ny: " .. ny)
+        print("nx: " .. nx .. " ny: " .. ny)
 
         self.l, self.t = tl, tt
         world:move(self, tl, tt)

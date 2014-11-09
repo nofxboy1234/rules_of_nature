@@ -3,16 +3,12 @@ bump = require 'lib.bump.bump'
 bump_debug = require 'bump_debug'
 gamestate = require 'lib.hump.gamestate'
 
-local Player = require 'player'
-
 playMusic = true
 
 gravity = 40
 
 window_width = love.graphics.getWidth()
 window_height = love.graphics.getHeight()
-
-player = Player:new('Whiskey')
 
 -- helper function
 function drawBox(box, r, g, b, alpha, overlay)
@@ -49,9 +45,3 @@ function get_joystick()
     return false
   end
 end
-
--- function love:joystickreleased(joystick, button)
-  -- if (joystick == joystick_01) and (button == 7) then
-  --   playMusic = not playMusic
-  -- end
--- end
