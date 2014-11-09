@@ -92,6 +92,111 @@ return {
         1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396,
         1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396, 1396
       }
+    },
+    {
+      type = "objectgroup",
+      name = "platforms",
+      visible = true,
+      opacity = 1,
+      properties = {},
+      objects = {
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 64,
+          y = 416,
+          width = 224,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 256,
+          y = 448,
+          width = 64,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 192,
+          y = 288,
+          width = 96,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 0,
+          y = 96,
+          width = 288,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 544,
+          y = 352,
+          width = 192,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 704,
+          y = 256,
+          width = 96,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 0,
+          y = 544,
+          width = 800,
+          height = 64,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 384,
+          y = 480,
+          width = 192,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
+      }
     }
   }
 }

@@ -13,4 +13,14 @@
    eJxjYBgFxIISVsJ4FIwCYgAxaWYkpqvBlK8GMp8PhL8HU9gT466hhgG+6yin
   </data>
  </layer>
+ <objectgroup name="platforms">
+  <object x="64" y="416" width="224" height="32"/>
+  <object x="256" y="448" width="64" height="32"/>
+  <object x="192" y="288" width="96" height="32"/>
+  <object x="0" y="96" width="288" height="32"/>
+  <object x="544" y="352" width="192" height="32"/>
+  <object x="704" y="256" width="96" height="32"/>
+  <object x="0" y="544" width="800" height="64"/>
+  <object x="384" y="480" width="192" height="32"/>
+ </objectgroup>
 </map>
