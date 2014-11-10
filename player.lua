@@ -1,5 +1,8 @@
 local Player = class('Player')
 
+--TODO: Stop allowing double jump after sliding off a platform.
+--TODO: Fix wall sticking.
+
 function Player:initialize(name)
   self.name = name
 
