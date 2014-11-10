@@ -1,6 +1,5 @@
 local Game = class('Game')
 local Player = require 'player'
-local Item = require 'item'
 
 local sti = require "lib.sti"
 
@@ -40,14 +39,6 @@ function Game:initialize()
     self:addBlock(rect.x, rect.y, rect.width, rect.height)
   end
 
-  self.items = {}
-  local item01 = Item:new('Ball', 100, 50)
-  -- print("item01.name: " .. item01.name)
-  self:addItem(item01)
-  -- for _,v in ipairs(self.items) do
-  --   print("item01.l: " .. v.l)
-  -- end
-
   if playMusic then
     self.music = love.audio.newSource("sounds/04_Kill_U_2wise_Over.mp3", "stream")
     self.music:setLooping(true)
@@ -60,17 +51,12 @@ end
 function Game:update(dt)
   self.map:update(dt)
 
-  for _, item in ipairs(self.items) do
-    item:update(dt)
-  end
-
   self.player:update(dt)
 end
 
 function Game:draw()
   self.map:draw()
   self:drawBlocks()
-  self:drawItems()
   self.player:draw()
 
   if shouldDrawDebug then self:drawDebug() end
@@ -119,18 +105,6 @@ end
 function Game:drawBlocks()
   for _,block in ipairs(self.blocks) do
     drawBox(block, 255,0,0,_,false)
-  end
-end
-
-function Game:addItem(item)
-  print("Game:addItem")
-  self.items[#self.items+1] = item
-  world:add(item, item.l, item.t, item.w, item.h)
-end
-
-function Game:drawItems()
-  for _, item in ipairs(self.items) do
-    item:draw()
   end
 end
 
