@@ -3,23 +3,23 @@ bump = require 'lib.bump.bump'
 bump_debug = require 'bump_debug'
 gamestate = require 'lib.hump.gamestate'
 
-local Player = require 'player'
--- local Menu = require 'menu'
+playMusic = false
 
--- World creation
-world = bump.newWorld()
 gravity = 40
 
 window_width = love.graphics.getWidth()
 window_height = love.graphics.getHeight()
 
-player = Player:new('Whiskey')
--- menu = Menu:new()
-
 -- helper function
-function drawBox(box, r,g,b)
-  love.graphics.setColor(r,g,b,70)
-  love.graphics.rectangle("fill", box.l, box.t, box.w, box.h)
+function drawBox(box, r, g, b, alpha, overlay)
+  alpha = alpha or 70
+  overlay = overlay or true
+
+  if overlay then
+    love.graphics.setColor(r,g,b,alpha)
+    love.graphics.rectangle("fill", box.l, box.t, box.w, box.h)
+  end
+
   love.graphics.setColor(r,g,b)
   love.graphics.rectangle("line", box.l, box.t, box.w, box.h)
 end
@@ -31,7 +31,7 @@ function love.load()
   print("Controller available: " .. tostring(got_joystick))
 
   gamestate.registerEvents()
-  gamestate.switch(require("menu")(true))
+  gamestate.switch(require("menu")())
 end
 
 
@@ -45,4 +45,3 @@ function get_joystick()
     return false
   end
 end
-

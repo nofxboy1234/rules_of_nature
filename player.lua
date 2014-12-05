@@ -1,12 +1,20 @@
-local Player = class('Player')
+local Entity = require("entity")
+
+local Player = class('Player', Entity)
+
+--TODO: Stop allowing double jump after sliding off a platform.
+--TODO: Fix wall sticking.
 
 function Player:initialize(name)
   self.name = name
 
-  self.l = 400
+  self.l = 50
   self.t = 50
-  self.w = 20
-  self.h = 20
+  self.w = 32
+  self.h = 32
+
+  self.start_l = self.l
+  self.start_t = self.t
 
   self.xVelocity = 0
   self.yVelocity = 0
@@ -38,7 +46,8 @@ function Player:update(dt)
   end
 
   if got_joystick then
-    if (self.state == "stand") and joystick_01:isDown(1) then
+    -- TODO: check whether to use isDown/pressed/released to fine tune
+    if (self.state == "stand") and joystick_01:isDown(2) then
       self.yVelocity = self.jump_vel * dt
       self.state = "jump"
     end
@@ -84,7 +93,15 @@ function Player:update(dt)
 end
 
 function Player:draw()
-  drawBox(self, 0, 255, 0)
+  drawBox(self, 0, 255, 0, 255)
+end
+
+function Player:takeDamage(damage, collider)
+  -- body
+end
+
+function Player:onCollide(collider)
+  -- body
 end
 
 function Player:keyreleased(key)

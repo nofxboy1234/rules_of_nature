@@ -1,6 +1,6 @@
 function love.conf(t)
   t.window.title = "rules of nature"
-  -- t.window.width = 1280
-  -- t.window.height = 720
-  -- t.window.vsync = true
+  t.window.width = 800
+  t.window.height = 608
+  t.window.vsync = true
 end

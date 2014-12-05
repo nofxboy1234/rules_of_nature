@@ -1,7 +1,23 @@
 local Game = class('Game')
+local Player = require 'player'
+
+local sti = require "lib.sti"
 
 function Game:initialize()
   print("Game:initialize()")
+
+  self.map = sti.new("maps/test")
+  -- Get the platforms object layer
+  local platformsLayer = self.map.layers["platforms"]
+  -- Turn off visibility property of platforms layer so default draw() doesn't draw them
+  platformsLayer.visible = false
+  -- Get the collision rectangles from the platforms layer
+  self.rectangles = platformsLayer.objects
+
+  -- for _,rect in ipairs(self.rectangles) do
+  --   print(rect.x)
+  -- end
+
   self.blocks = {}
   self.instructions = [[
     bump.lua simple demo
@@ -11,47 +27,73 @@ function Game:initialize()
       delete: run garbage collector
   ]]
 
+  -- World creation
+  world = bump.newWorld()
 
-  world:add(player, player.l, player.t, player.w, player.h)
+  self.player = Player:new('Whiskey')
+  world:add(self.player, self.player.l, self.player.t, self.player.w, self.player.h)
 
-  self:addBlock(0,       0,     800, 32)
-  self:addBlock(0,      32,      32, 600-32*2)
-  self:addBlock(800-32, 32,      32, 600-32*2)
-  self:addBlock(0,      600-32, 800, 32)
+  -- Add the collision rectangle from the platforms layer to the
+  -- list of blocks to be drawn, and the bump world, for collision
+  for _,rect in ipairs(self.rectangles) do
+    self:addBlock(rect.x, rect.y, rect.width, rect.height)
+  end
 
-  for i=1,30 do
-    self:addBlock( math.random(100, 600),
-              math.random(100, 400),
-              math.random(10, 100),
-              math.random(10, 100)
-    )
+  if playMusic then
+    self.music = love.audio.newSource("sounds/04_Kill_U_2wise_Over.mp3", "stream")
+    self.music:setLooping(true)
+    self.music:setVolume(0.2)
+    self.music:play()
   end
 
 end
 
 function Game:update(dt)
-  player:update(dt)
+  self.map:update(dt)
+
+  self.player:update(dt)
 end
 
 function Game:draw()
+  self.map:draw()
   self:drawBlocks()
-  player:draw()
-  if shouldDrawDebug then drawDebug() end
+  self.player:draw()
+
+  if shouldDrawDebug then self:drawDebug() end
   self:drawMessage()
 end
 
 function Game:keypressed(k, isrepeat)
-  if k=="escape" then love.event.quit() end
+  -- print("Game:keypressed()")
+  if k == "escape" then
+    if playMusic then
+      self.music:stop()
+    end
+    gamestate.switch(require("menu")())
+  end
+
   if k=="tab"    then shouldDrawDebug = not shouldDrawDebug end
   if k=="delete" then collectgarbage("collect") end
 end
 
 function Game:keyreleased(key)
-  player:keyreleased(key)
+  -- print("Game:keyreleased()")
+  self.player:keyreleased(key)
+end
+
+function Game:joystickpressed(joystick, button)
+  -- print("Game:joystickpressed()")
+  if (joystick == joystick_01) and (button == 8) then
+    if playMusic then
+      self.music:stop()
+    end
+    gamestate.switch(require("menu")())
+  end
 end
 
 function Game:joystickreleased(joystick, button)
-  player:joystickreleased(joystick, button)
+  -- print("Game:joystickreleased()")
+  self.player:joystickreleased(joystick, button)
 end
 
 function Game:addBlock(l,t,w,h)
@@ -62,7 +104,7 @@ end
 
 function Game:drawBlocks()
   for _,block in ipairs(self.blocks) do
-    drawBox(block, 255,0,0)
+    drawBox(block, 255,0,0,_,false)
   end
 end
 
