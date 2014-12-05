@@ -1,4 +1,6 @@
-local Player = class('Player')
+local Entity = require("entity")
+
+local Player = class('Player', Entity)
 
 --TODO: Stop allowing double jump after sliding off a platform.
 --TODO: Fix wall sticking.
@@ -94,6 +96,14 @@ function Player:draw()
   drawBox(self, 0, 255, 0, 255)
 end
 
+function Player:takeDamage(damage, collider)
+  -- body
+end
+
+function Player:onCollide(collider)
+  -- body
+end
+
 function Player:keyreleased(key)
   if (key == "right") or (key == "left") then
     self.xVelocity = 0
@@ -106,10 +116,6 @@ function Player:joystickreleased(joystick, button)
       self.xVelocity = 0
     end
   end
-end
-
-function Player:reset_pos()
-  self.l, self.t = self.start_l, self.start_t
 end
 
 return Player
